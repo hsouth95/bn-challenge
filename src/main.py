@@ -2,6 +2,7 @@ import requests
 
 from extractor import Extractor
 from matcher import Matcher
+from models import Member, Job
 
 JOBS_ENDPOINT = "https://bn-hiring-challenge.fly.dev/jobs.json"
 MEMBERS_ENDPOINT = "https://bn-hiring-challenge.fly.dev/members.json"
@@ -9,13 +10,15 @@ MEMBERS_ENDPOINT = "https://bn-hiring-challenge.fly.dev/members.json"
 
 def get_data() -> tuple[dict, dict]:
   try:
-    jobs = requests.get(JOBS_ENDPOINT).json()
+    jobs_response = requests.get(JOBS_ENDPOINT).json()
+    jobs = [Job(**job) for job in jobs_response]
   except:
     print(f"Failed to get jobs from {JOBS_ENDPOINT}")
     raise
 
   try:
-    members = requests.get(MEMBERS_ENDPOINT).json()
+    members_response = requests.get(MEMBERS_ENDPOINT).json()
+    members = [Member(**member) for member in members_response]
   except:
     print(f"Failed to get members from {MEMBERS_ENDPOINT}")
     raise
@@ -29,9 +32,9 @@ if __name__ == "__main__":
   extractor = Extractor()
 
   for member in members:
-    print(f"Looking for job matches for {member['name']}, who is searching: '{member['bio']}'")
+    print(f"Looking for job matches for {member.name}, who is searching: '{member.bio}'")
     # append new fields to member object
-    member = dict(extractor.extract_member_info(member), **member)
+    member.locations = extractor.extract_member_info(member)["locations"]
     for job in jobs:
       if Matcher.match_job(job, member):
-        print(f"\tJob match found: {job['title']} in {job['location']}")
+        print(f"\tJob match found: {job.title} in {job.location}")

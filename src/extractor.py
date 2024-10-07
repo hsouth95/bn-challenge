@@ -1,14 +1,14 @@
 import spacy
-
+from models import Member
 
 class Extractor():
 
   def __init__(self):
     self.nlp = spacy.load("en_core_web_sm")
 
-  def extract_member_info(self, member: dict) -> dict:
+  def extract_member_info(self, member: Member) -> dict:
     return {
-      "locations": self.extract_member_locations(member["bio"]),
+      "locations": self.extract_member_locations(member.bio),
       # TODO: Update model to be able to extract job role (this would require training or much more complicated logic)
     }
 

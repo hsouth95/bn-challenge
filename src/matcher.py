@@ -1,8 +1,10 @@
+from models import Member, Job
+
 class Matcher():
 
   @staticmethod
-  def match_job(job: dict, member: dict) -> bool:
-    return Matcher.match_location(job['location'], member['locations']) and Matcher.match_job_role(job['title'], member['bio'])
+  def match_job(job: Job, member: Member) -> bool:
+    return Matcher.match_location(job.location, member.locations) and Matcher.match_job_role(job.title, member.bio)
 
   @staticmethod
   def match_location(job_location: str, member_locations: list[str]) -> bool:
