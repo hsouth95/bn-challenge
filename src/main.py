@@ -1,5 +1,7 @@
 import requests
 
+from extractor import Extractor
+from matcher import Matcher
 
 JOBS_ENDPOINT = "https://bn-hiring-challenge.fly.dev/jobs.json"
 MEMBERS_ENDPOINT = "https://bn-hiring-challenge.fly.dev/members.json"
@@ -21,6 +23,15 @@ def get_data() -> tuple[dict, dict]:
   return (jobs, members)
 
 
-jobs, members = get_data()
-print(jobs)
-print(members)
+if __name__ == "__main__":
+  jobs, members = get_data()
+
+  extractor = Extractor()
+
+  for member in members:
+    print(f"Looking for job matches for {member['name']}, who is searching: '{member['bio']}'")
+    # append new fields to member object
+    member = dict(extractor.extract_member_info(member), **member)
+    for job in jobs:
+      if Matcher.match_job(job, member):
+        print(f"\tJob match found: {job['title']} in {job['location']}")
