@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "bn-hiring"
+version = "0.0.1"
+description = "Recommendation engine for job roles and location for BN hiring test"
+authors = ["Harrison South <hsouth95@hotmail.co.uk>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+requests = "^2.32.3"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
