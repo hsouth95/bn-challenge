@@ -66,3 +66,4 @@ Looking back I'd adjust the structure of my code to allow separate extractors us
 * Add more tests for the `Matcher` class - this was a much simpler class so wanted to focus on `Extractor` testing
 * Add async HTTP calls for the data requests - this could allow for better performance by running the requests in parallel, important if the datasets were to increase in size.
 * Update the `Extractor` class to better use the `nlp` loading. I think loading from the `bio` field lends itself to a caching opportunity and if the dataset were to increase in size, this would need to be utilised.
+* Add pre-hooks (`pre-commit`) in order to add basic automated formatting and even pre-commit/push testing
