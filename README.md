@@ -10,12 +10,11 @@ To install dependencies with poetry run the following commands
 
 ```bash
 poetry install --no-root
-poetry shell
 ```
 
-This will put you in a virtualenv with all the dependencies installed.
+This will create a virtualenv for you that can be used with `poetry run python ...`
 
-Alternatively, if you don't want to utilise poetry, there is a requirements.txt file that you can create a virtualenv of to run the code, as shown below:
+Alternatively, if you don't want to utilise poetry, there is a requirements.txt file that you can create a virtualenv of to run the code, as shown below (please note I mostly used poetry to test and so this may not work fully):
 
 ```bash
 virtualenv .venv
@@ -25,6 +24,10 @@ pip install -r requirements.txt
 We now need to install pre-trained models for our project (explained further down as to why it's used).
 
 ```bash
+# Using poetry
+poetry run python -m spacy download en_core_web_sm
+
+# Using virtualenv/pip
 python -m spacy download en_core_web_sm
 ```
 
@@ -33,6 +36,10 @@ python -m spacy download en_core_web_sm
 From either a poetry shell or a virtualenv. Run the following:
 
 ```bash
+# Using poetry
+poetry run python src/main.py
+
+# Using virtualenv/pip
 python src/main.py
 ```
 
@@ -41,6 +48,10 @@ python src/main.py
 From either a poetry shell or a virtualenv. Run the following:
 
 ```bash
+# Using poetry
+poetry run python -m pytest
+
+# Using virtualenv/pip
 python -m pytest
 ```
 
@@ -59,6 +70,10 @@ time I could write some custom logic around the usage of nouns to match these.
 I struggled to get the 'negative' matching of locations without adding rather restrictive checks. If I had more time i'd like to expand these checks to look at the context of the locations mentioned and try to determine if it's a negative sentiment which might suggest that they did not want to work there. Additionally, with the job roles, I did not get around to fuzzy matching these (e.g. Marketing wouldn't match a Marketer in my solution). Given the time I'd look into text matching for similarities in order to overcome this.
 
 Looking back I'd adjust the structure of my code to allow separate extractors using an Abstract Base Class to ensure basic functionality from the calling code. You could then register these extractors against a 'search' criteria in order to allow further fields that you may want to search on (e.g. seniority). This would also allow for better logic separation as right now the code melds a bit too much with the differing logic of location vs. job role.
+
+## Thoughts on my solution
+
+My solution doesn't match all members to their perfect jobs. Specifically with job roles that don't exactly match what the member wrote in their biography. Additionally, there is an inability to determine if a member is moving away from a location and so should not includes jobs there. Both of these are things that I would require more time to dig deep into and start to build more custom logic either using `scapy` or with more basic matching.
 
 ## Smaller things I'd improve on if I had more time
 
