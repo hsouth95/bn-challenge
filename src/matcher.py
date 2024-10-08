@@ -1,10 +1,16 @@
 from models import Member, Job
 
-class Matcher():
+class Matcher:
 
   @staticmethod
   def match_job(job: Job, member: Member) -> bool:
-    return Matcher.match_location(job.location, member.locations) and Matcher.match_job_role(job.title, member.bio)
+    # Check to see if we can match any locations, otherwise we'll say all locations match
+    # If the member has specified locations, we check to see if they match where the job is located
+    is_location_match = len(member.locations) == 0 or Matcher.match_location(job.location, member.locations)
+
+    is_job_match = Matcher.match_job_role(job.title, member.bio)
+
+    return is_location_match and is_job_match
 
   @staticmethod
   def match_location(job_location: str, member_locations: list[str]) -> bool:

@@ -13,6 +13,7 @@ def get_data() -> tuple[dict, dict]:
     jobs_response = requests.get(JOBS_ENDPOINT).json()
     jobs = [Job(**job) for job in jobs_response]
   except:
+    # TODO: Split this into requests and pydantic exceptions
     print(f"Failed to get jobs from {JOBS_ENDPOINT}")
     raise
 
@@ -20,6 +21,7 @@ def get_data() -> tuple[dict, dict]:
     members_response = requests.get(MEMBERS_ENDPOINT).json()
     members = [Member(**member) for member in members_response]
   except:
+    # TODO: Split this into requests and pydantic exceptions
     print(f"Failed to get members from {MEMBERS_ENDPOINT}")
     raise
 
@@ -33,7 +35,8 @@ if __name__ == "__main__":
 
   for member in members:
     print(f"Looking for job matches for {member.name}, who is searching: '{member.bio}'")
-    # append new fields to member object
+
+    # Add extracted fields to member
     member.locations = extractor.extract_member_info(member)["locations"]
     for job in jobs:
       if Matcher.match_job(job, member):
