@@ -48,8 +48,9 @@ python -m pytest
 
 ## Thoughts of the project and my approach
 
-I enjoyed this challenge as I felt the data provided gave a number of ways to overcome the challenge. My focus was on getting the **perfect** match (location AND role)
-and so my approach involved a simpler matching algorithm instead of an alternative strategy of scoring matches (e.g. You wanted Leeds but the job role matches). I also wanted to make it quite an open solution to allow more custom biographies to be entered.
+I enjoyed this challenge as I felt the data provided gave a number of ways to overcome the challenge. I think dealing with a user input biography line makes this a particularly challenging problem but in the day and age of LLMs I can see why it's a realistic challenge!
+
+My focus was on getting the **perfect** match (location AND role) and so my approach involved a simpler matching algorithm instead of an alternative strategy of scoring matches (e.g. You wanted Leeds but the job role matches). I also wanted to make it quite an open solution to allow more custom biographies to be entered.
 
 One of my first thoughts was to write some regex to filter the language provided in the example datasets. However, I felt this would be too restrictive and would mostly result on default answers when any biography was expanded upon.
 I initially went with using Scapy thinking I could use the 'Named entity recognition' to get both locations and job roles. However, with my limited experience of NLPs, I struggled to get the job roles identified. I think with more
